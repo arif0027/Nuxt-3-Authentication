@@ -1,4 +1,4 @@
-export const useAuthStore = defineStore('auth', {
+export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: {},
   }),
@@ -13,62 +13,52 @@ export const useAuthStore = defineStore('auth', {
 
   actions: {
     async login(formData) {
-      // Avoid setting a new token if it already exists in localStorage
-      // if (tokenStore.token) {
-      //   return; 
-      // }
       try {
-        const { data } = await $fetch('http://localhost:8000/api/login', {
-          method: 'POST',
+        const { data } = await $fetch("http://localhost:8000/api/login", {
+          method: "POST",
           body: { ...formData },
         });
         this.commonSetter(data);
       } catch (error) {
-        throw error; 
+        throw error;
       }
     },
 
-
-    async register(formData) {   
-      // if (tokenStore.token) {
-      //   return; 
-      // }
+    async register(formData) {
       try {
-        const { data } = await $fetch('http://localhost:8000/api/register', {
-          method: 'POST',
+        const { data } = await $fetch("http://localhost:8000/api/register", {
+          method: "POST",
           body: { ...formData },
-        });  
+        });
         this.commonSetter(data);
       } catch (error) {
-        throw error; 
+        throw error;
       }
     },
 
-    async logout() {   
+    async logout() {
       const tokenStore = useTokenStore();
       try {
-        const res = await $fetch('http://localhost:8000/api/logout', {
-          method: 'POST',
+        const res = await $fetch("http://localhost:8000/api/logout", {
+          method: "POST",
           headers: {
             Accept: "application/json",
             Authorization: `Bearer ${tokenStore.getToken}`,
           },
         });
-    
+
         tokenStore.removeToken();
         console.log(res);
       } catch (error) {
-        throw error; 
+        throw error;
       }
     },
-    
 
-    commonSetter(data){
-        const tokenStore = useTokenStore(); 
-        tokenStore.setToken(data.token); 
-        this.user = data.user;
-        return navigateTo('/dashboard');
-    }
-
+    commonSetter(data) {
+      const tokenStore = useTokenStore();
+      tokenStore.setToken(data.token);
+      this.user = data.user;
+      return navigateTo("/dashboard");
+    },
   },
 });
