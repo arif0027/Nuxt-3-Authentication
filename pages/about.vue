@@ -1,3 +1,8 @@
+<script setup>
+    definePageMeta({
+        middleware: ["auth"]
+    });
+</script>
 <template>
     <div class="pt-16">
         <div

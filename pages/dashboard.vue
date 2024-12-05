@@ -1,5 +1,9 @@
 <script setup>
     const auth = useAuthStore();
+
+    definePageMeta({
+      middleware: ["auth"]
+    });
 </script>
 
 <template>

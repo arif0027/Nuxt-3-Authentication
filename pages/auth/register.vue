@@ -1,4 +1,9 @@
 <script setup>
+
+    definePageMeta({
+      middleware: ["guest"]
+    });
+
     const auth = useAuthStore();
     const token = useTokenStore();
     const form = reactive({
